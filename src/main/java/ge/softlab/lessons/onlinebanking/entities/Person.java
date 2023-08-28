@@ -1,5 +1,6 @@
 package ge.softlab.lessons.onlinebanking.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,8 +27,16 @@ public class Person {
 
     private LocalDate birthDate;
 
+    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "person_id", insertable = false, updatable = false)
     private List<Account> accounts;
+
+    public Integer getAge() {
+        if (this.birthDate == null) {
+            return null;
+        }
+        return LocalDate.now().getYear() - this.birthDate.getYear();
+    }
 
 }
