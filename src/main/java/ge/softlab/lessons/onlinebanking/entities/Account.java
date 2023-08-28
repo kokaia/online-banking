@@ -23,7 +23,11 @@ public class Account {
     private Person person;
 
     private String name;
+
     private Double amount;
+
     private String iban;
+
+    private Boolean blocked;
 
 }

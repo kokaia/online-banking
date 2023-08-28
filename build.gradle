@@ -31,6 +31,8 @@ dependencies {
 			'org.apache.commons:commons-lang3:3.13.0',
 			'org.springframework.boot:spring-boot-starter-data-jpa',
 			'org.springframework.boot:spring-boot-starter-web',
+			'org.springframework.boot:spring-boot-starter-validation',
+			'jakarta.validation:jakarta.validation-api:3.0.2',
 	)
 
 	runtimeOnly 'org.postgresql:postgresql'
