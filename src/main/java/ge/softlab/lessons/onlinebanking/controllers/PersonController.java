@@ -3,12 +3,15 @@ package ge.softlab.lessons.onlinebanking.controllers;
 import ge.softlab.lessons.onlinebanking.entities.Account;
 import ge.softlab.lessons.onlinebanking.entities.Person;
 import ge.softlab.lessons.onlinebanking.models.AccountCreateModel;
+import ge.softlab.lessons.onlinebanking.models.PersonModel;
 import ge.softlab.lessons.onlinebanking.models.PersonSearchModel;
 import ge.softlab.lessons.onlinebanking.services.PersonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,13 +22,8 @@ public class PersonController {
     private final PersonService personService;
 
     @GetMapping
-    public List<Person> search(PersonSearchModel params){
-        var persons = personService.search(params);
-//        var ans = new ArrayList<PersonModel>();
-//        for (var person: persons) {
-//            ans.add(new PersonModel(person.getId(), person.getPersonalNumber(), person.getFirstName(), person.getLastName(), person.getBirthDate()));
-//        }
-        return persons;
+    public Page<PersonModel> search(PersonSearchModel params){
+        return personService.search(params).map(Person::toPersonModel);
     }
 
     @GetMapping("{id}")

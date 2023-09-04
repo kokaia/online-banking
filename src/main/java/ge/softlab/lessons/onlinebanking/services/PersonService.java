@@ -4,13 +4,14 @@ import ge.softlab.lessons.onlinebanking.entities.Account;
 import ge.softlab.lessons.onlinebanking.entities.Person;
 import ge.softlab.lessons.onlinebanking.models.AccountCreateModel;
 import ge.softlab.lessons.onlinebanking.models.PersonSearchModel;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PersonService {
 
-    List<Person> search(PersonSearchModel params);
+    Page<Person> search(PersonSearchModel params);
     Optional<Person> getPerson(Integer id);
 
     List<Account> getPersonAccounts(Integer id);

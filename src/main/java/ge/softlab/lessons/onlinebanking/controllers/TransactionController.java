@@ -1,7 +1,5 @@
 package ge.softlab.lessons.onlinebanking.controllers;
 
-import ge.softlab.lessons.onlinebanking.entities.Account;
-import ge.softlab.lessons.onlinebanking.entities.Person;
 import ge.softlab.lessons.onlinebanking.models.TransactionAddModel;
 import ge.softlab.lessons.onlinebanking.services.TransactionService;
 import jakarta.validation.Valid;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 @RestController

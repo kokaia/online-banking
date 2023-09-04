@@ -28,8 +28,8 @@ public class PersonServiceImpl implements PersonService {
     private final AccountRepository accountRepository;
 
     @Override
-    public List<Person> search(PersonSearchModel params) {
-        Page<Person> ans = personRepository.findAll((root, query, criteriaBuilder) -> {
+    public Page<Person> search(PersonSearchModel params) {
+        return personRepository.findAll((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             if (StringUtils.isNotEmpty(params.personalNumber())){
@@ -58,8 +58,6 @@ public class PersonServiceImpl implements PersonService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
 
         }, Pageable.ofSize(10));
-
-        return ans.stream().toList();
     }
 
     @Override

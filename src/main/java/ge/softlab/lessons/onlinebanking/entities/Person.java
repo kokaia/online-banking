@@ -1,6 +1,7 @@
 package ge.softlab.lessons.onlinebanking.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import ge.softlab.lessons.onlinebanking.models.PersonModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,16 @@ public class Person {
             return null;
         }
         return LocalDate.now().getYear() - this.birthDate.getYear();
+    }
+
+    public PersonModel toPersonModel() {
+        return PersonModel.builder()
+            .id(this.getId())
+            .personalNumber(this.getPersonalNumber())
+            .firstName(this.getFirstName())
+            .lastName(this.getLastName())
+            .birthDate(this.getBirthDate())
+            .build();
     }
 
 }
