@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(schema = "public", name="accounts")
-public class Account {
+public class Account extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="accounts_seq_generator")

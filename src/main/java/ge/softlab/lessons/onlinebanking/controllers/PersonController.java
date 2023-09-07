@@ -9,9 +9,14 @@ import ge.softlab.lessons.onlinebanking.services.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,11 +26,13 @@ public class PersonController {
 
     private final PersonService personService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public Page<PersonModel> search(PersonSearchModel params){
         return personService.search(params).map(Person::toPersonModel);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("{id}")
     public ResponseEntity<Person> person(@PathVariable Integer id){
         return ResponseEntity.of(personService.getPerson(id));
@@ -36,6 +43,7 @@ public class PersonController {
         return personService.getPersonAccounts(personId);
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping("{personId}/accounts")
     public Account personCreateAccount(@PathVariable Integer personId, @RequestBody AccountCreateModel accountCreateModel){
         return personService.personCreateAccount(personId, accountCreateModel);
