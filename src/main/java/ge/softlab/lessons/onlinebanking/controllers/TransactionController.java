@@ -2,6 +2,7 @@ package ge.softlab.lessons.onlinebanking.controllers;
 
 import ge.softlab.lessons.onlinebanking.models.TransactionAddModel;
 import ge.softlab.lessons.onlinebanking.services.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class TransactionController {
     private final TransactionService service;
 
     @PostMapping
+    @Operation(tags = "Transactions", summary = "თანხის გადარიცხვა")
     public ResponseEntity<?> addTransaction(@Valid @RequestBody TransactionAddModel data){
         try {
             service.addTransaction(data);
