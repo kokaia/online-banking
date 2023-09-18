@@ -1,7 +1,9 @@
 package ge.softlab.lessons.onlinebanking.controllers;
 
 import jakarta.activation.MimetypesFileTypeMap;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +29,21 @@ import java.util.List;
 @RequestMapping("files")
 public class FileManagementController {
 
+    @Value("${upload_files_path:/tmp/}")
+    public String uploadDir;
+
+    @Value("${allow_upload:false}")
+    public Boolean allowUpload;
+
+    @PostConstruct
+    public void postCon(){
+        System.out.println(uploadDir);
+        System.out.println(allowUpload);
+    }
+
     @GetMapping
     public List<String> getFiles(){
-        File file = new File("./");
+        File file = new File(uploadDir);
         var ans = new ArrayList<String>();
         if (file.isDirectory() && file.listFiles()!=null){
             for (var f : file.listFiles()){
@@ -41,7 +55,7 @@ public class FileManagementController {
 
     @GetMapping("{fileName}")
     public ResponseEntity<?> getFile(@PathVariable String fileName, HttpServletResponse response) throws IOException {
-        var prefix = "./";
+        var prefix = uploadDir;
         File f = new File(prefix + fileName);
         var abs = f.getCanonicalPath();
 
@@ -68,7 +82,7 @@ public class FileManagementController {
     @GetMapping("test")
     public void test(){
 
-        File f = new File("./test.txt");
+        File f = new File(uploadDir + "test.txt");
 
         try(var out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(f,true)), true)) {
             out.println(59);
@@ -84,8 +98,11 @@ public class FileManagementController {
         if (file == null || file.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
+        if (!allowUpload) {
+            throw new RuntimeException("Upload is disabled");
+        }
         try {
-            var prefix = "./";
+            var prefix = uploadDir;
             File f = new File(prefix + file.getOriginalFilename());
             var abs = f.getCanonicalPath();
 
