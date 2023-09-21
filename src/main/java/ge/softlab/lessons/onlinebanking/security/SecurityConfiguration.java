@@ -43,8 +43,8 @@ public class SecurityConfiguration {
             .formLogin(withDefaults())
             .exceptionHandling( (c) -> c.authenticationEntryPoint(
                 (request, response, authException) -> response.sendError(401, "Forbidden")
-            ))
-            ;
+            ));
+
 		//@ formatter:on
         http.csrf(AbstractHttpConfigurer::disable);
 		return http.build();

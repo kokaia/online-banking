@@ -1,5 +1,6 @@
 package ge.softlab.lessons.onlinebanking.entities;
 
+import ge.softlab.lessons.onlinebanking.models.SuperAnotaion;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,14 +16,20 @@ import java.util.Objects;
 @Table(schema = "public", name = "users")
 public class UserDomain implements UserDetails {
 
+    public final String str = "CONST";
+
     @Id
     private Integer id;
 
+    @SuperAnotaion(value = "asdsa", name = "aa")
     @Column(name="email")
     private String username;
 
+    @SuperAnotaion
+    @Column(name="password")
     private String password;
 
+    @SuperAnotaion("true")
     private Boolean active;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -32,6 +39,15 @@ public class UserDomain implements UserDetails {
         inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<RoleDomain> roles;
+
+    @SuperAnotaion
+    public void printMethod() {
+        System.out.println("\n\nHi\n\n");
+    }
+    @SuperAnotaion
+    public void printMethodWithArgument(String a) {
+        System.out.println(a);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
