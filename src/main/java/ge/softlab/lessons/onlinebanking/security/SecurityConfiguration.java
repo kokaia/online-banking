@@ -35,8 +35,9 @@ public class SecurityConfiguration {
 		http
             .authorizeHttpRequests(
                 (authorize) -> authorize
-                    .requestMatchers("/persons", "/libs/**", "/images/**").permitAll()
+                    .requestMatchers("/libs/**", "/images/**").permitAll()
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
+                    .requestMatchers("/files", "/files/**").permitAll()
                     .anyRequest().authenticated()
             )
             .httpBasic(withDefaults())

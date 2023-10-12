@@ -16,8 +16,6 @@ import java.util.Objects;
 @Table(schema = "public", name = "users")
 public class UserDomain implements UserDetails {
 
-    public final String str = "CONST";
-
     @Id
     private Integer id;
 
